@@ -4,6 +4,7 @@ import { getCommands } from './loaders/CommandLoader';
 import { ISettings, IBotClient } from './types';
 import { Command } from './Command';
 import { EmbedBuilder } from './builder/EmbedBuilder';
+import { createDatabaseConnection } from './utils/database';
 
 export class Client extends DiscordClient implements IBotClient {
     public settings: ISettings;
@@ -16,7 +17,9 @@ export class Client extends DiscordClient implements IBotClient {
         this.settings = settings;
         this.settings.token = process.env.BOT_TOKEN;
         this.commands = getCommands(this);
+
         loadEvents(this);
+        createDatabaseConnection();
 
         this.login(settings.token).then(() => {
             this.builder = new EmbedBuilder(this);
