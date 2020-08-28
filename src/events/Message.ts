@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Discord from 'discord.js';
+import { Message as DiscordMessage } from 'discord.js';
 import { Client } from '../Client';
 import { IEvent } from '../types';
 import { Logger } from '../utils/Logger';
@@ -12,7 +12,7 @@ export default class Message implements IEvent {
     }
 
     async run(args: any): Promise<void> {
-        const message: Discord.Message = args;
+        const message: DiscordMessage = args;
 
         if (message.author.bot || !message.content.startsWith(this.client.settings.prefix)) return;
 

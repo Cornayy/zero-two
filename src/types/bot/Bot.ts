@@ -13,10 +13,12 @@ import {
     Collection
 } from 'discord.js';
 import { Command } from '../../Command';
+import { EmbedBuilder } from '../../builder/EmbedBuilder';
 
 export interface IBotClient extends Client {
     settings: ISettings;
     commands: Collection<string, Command>;
+    builder: EmbedBuilder;
     userHasPermission(user: GuildMember, requiredPermissions: PermissionString[]): boolean;
 }
 

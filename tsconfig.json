@@ -12,6 +12,7 @@
         "strictNullChecks": true,
         "noImplicitThis": true,
         "inlineSourceMap": true,
+        "strictPropertyInitialization": false,
         "moduleResolution": "node",
         "sourceRoot": "src"
     },

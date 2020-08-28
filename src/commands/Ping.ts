@@ -8,13 +8,13 @@ export default class Ping extends Command {
             name: 'ping',
             description: 'Pings the bot.',
             category: 'Information',
-            usage: `${client.settings.prefix}ping`,
+            usage: client.settings.prefix.concat('ping'),
             cooldown: 1000,
             requiredPermissions: ['READ_MESSAGES']
         });
     }
 
     public async run(message: Message): Promise<void> {
-        await super.respond(message.channel, 'Pong!');
+        super.respond(message.channel, 'Pong!');
     }
 }

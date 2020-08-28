@@ -4,5 +4,4 @@ import { Client } from './Client';
 
 dotenv.config();
 
-const client = new Client(settings);
-client.login(client.settings.token);
+new Client(settings);
