@@ -3,11 +3,11 @@ import { ISettings } from '../types';
 export const settings: ISettings = {
     presence: {
         game: {
-            name: '!help for commands',
+            name: '>help for commands',
             type: 'PLAYING'
         }
     },
-    prefix: '!',
+    prefix: '>',
     paths: {
         commands: 'src/commands',
         events: 'src/events'

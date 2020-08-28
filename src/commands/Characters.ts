@@ -60,7 +60,7 @@ export default class Characters extends Command {
                     .split(' ')
                     .slice(1)
                     .join(' ');
-                embed.addField(name, rest, true);
+                embed.addField(name, rest, false);
             });
 
             await super.respond(message.channel, embed);
