@@ -41,6 +41,7 @@ export default class Characters extends Command {
                 .join(' ');
             embed.addField(name, rest, true);
         });
+
         await super.respond(message.channel, embed);
     }
 }
