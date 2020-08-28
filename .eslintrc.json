@@ -32,6 +32,7 @@
         "class-methods-use-this": "off",
         "import/no-dynamic-require": "off",
         "global-require": "off",
+        "consistent-return": "off",
         "no-shadow": "off",
         "node/no-unsupported-features/es-syntax": "off",
         "lines-between-class-members": "off",

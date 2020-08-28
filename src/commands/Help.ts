@@ -16,7 +16,12 @@ export default class Help extends Command {
 
     public async run(message: Message): Promise<void> {
         const { commands } = this.client;
-        const embed = this.client.builder.getEmbed().setTitle('Help');
+        const embed = this.client.builder
+            .getEmbed()
+            .setTitle('Help')
+            .setDescription(
+                `You can check the usage of a command with the ${this.client.settings.prefix}usage command.`
+            );
 
         commands.forEach((command: Command) =>
             embed.addField(command.conf.name, `*${command.conf.usage}*`, true)
