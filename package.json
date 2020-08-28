@@ -1,21 +1,21 @@
 {
-  "name": "dofus-character-bot",
+  "name": "zero-two",
   "version": "1.0.0",
-  "description": "TypeScript Discord bot.",
+  "description": "A TypeScript Discord bot.",
   "main": "src/index.ts",
   "scripts": {
     "start": "tsc && node dist/src/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cornayy/ts-discord-bot-boilerplate.git"
+    "url": "git+https://github.com/Cornayy/zero-two.git"
   },
   "author": "Cornayy",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Cornayy/ts-discord-bot-boilerplate/issues"
+    "url": "https://github.com/Cornayy/zero-two/issues"
   },
-  "homepage": "https://github.com/Cornayy/ts-discord-bot-boilerplate#readme",
+  "homepage": "https://github.com/Cornayy/zero-two#readme",
   "dependencies": {
     "axios": "^0.20.0",
     "cheerio": "^1.0.0-rc.3",
