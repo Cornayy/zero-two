@@ -1,4 +1,4 @@
-# ts-discord-bot-boilerplate
+# dofus-character-bot
 
 A TypeScript Discord bot boilerplate.
 
