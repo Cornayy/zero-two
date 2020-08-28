@@ -1,12 +1,16 @@
 import { Message } from 'discord.js';
 import { Command } from '../Command';
-import { IBotClient } from '../types';
+import { IBotClient, IUser } from '../types';
 import { fetchUrl, getContent } from '../utils/scraping';
 import { Guild } from '../models/Guild';
-import { Logger } from '../utils/Logger';
 
 export default class Characters extends Command {
     private BASE_URL = 'https://account.ankama.com/en/ankama-profile/';
+    private MESSAGES = [
+        'You have not specified a member.',
+        'No registered server was found for the mentioned user.',
+        'No nickname was found for the mentioned user.'
+    ];
 
     constructor(client: IBotClient) {
         super(client, {
@@ -19,53 +23,43 @@ export default class Characters extends Command {
         });
     }
 
-    public async run(message: Message): Promise<void> {
+    private async handleChecks(message: Message): Promise<IUser | null | undefined> {
         const member = message.mentions.members.first();
+        const guild = await Guild.findOne({ id: message.guild.id }).exec();
+        const foundUser = guild ? guild.users.find(({ id }) => id === member.id) : null;
+        const checks = [member, guild, foundUser];
 
-        if (!member) {
-            await super.respond(message.channel, 'You have not specified a member.');
-            return;
+        for (const [index, check] of checks.entries()) {
+            if (!check) {
+                await super.respond(message.channel, this.MESSAGES[index]);
+                break;
+            }
         }
 
-        try {
-            const guild = await Guild.findOne({ id: message.guild.id }).exec();
-            if (!guild) {
-                await super.respond(
-                    message.channel,
-                    'No registered server was found for the mentioned user.'
-                );
-                return;
-            }
+        return foundUser;
+    }
 
-            const user = guild.users.find(({ id }) => id === member.id);
-            if (!user) {
-                await super.respond(
-                    message.channel,
-                    'No nickname was found for the mentioned user.'
-                );
-                return;
-            }
+    public async run(message: Message): Promise<void> {
+        const user = await this.handleChecks(message);
+        if (!user) return;
 
-            const content = await fetchUrl(this.BASE_URL.concat(user.nickname));
-            const selector = getContent(content);
-            const characters = selector('table[class="ak-container ak-table ak-responsivetable"]')
-                .text()
-                .split('\n')
-                .filter(char => char);
-            const embed = this.client.builder.getEmbed().setTitle(`Characters: ${user.nickname}`);
+        const content = await fetchUrl(this.BASE_URL.concat(user.nickname));
+        const selector = getContent(content);
+        const characters = selector('table[class="ak-container ak-table ak-responsivetable"]')
+            .text()
+            .split('\n')
+            .filter(char => char);
+        const embed = this.client.builder.getEmbed().setTitle(`Characters: ${user.nickname}`);
 
-            characters.forEach(character => {
-                const name = character.split(' ').shift();
-                const rest = character
-                    .split(' ')
-                    .slice(1)
-                    .join(' ');
-                embed.addField(name, rest, false);
-            });
+        characters.forEach(character => {
+            const name = character.split(' ').shift();
+            const rest = character
+                .split(' ')
+                .slice(1)
+                .join(' ');
+            embed.addField(name, rest, false);
+        });
 
-            await super.respond(message.channel, embed);
-        } catch (err) {
-            Logger.error(err);
-        }
+        await super.respond(message.channel, embed);
     }
 }

@@ -41,5 +41,6 @@
         "@typescript-eslint/no-explicit-any": "off",
         "no-new": "off",
         "@typescript-eslint/interface-name-prefix": "off"
+        "no-await-in-loop": "off"
     }
 }
