@@ -24,7 +24,7 @@ export default class Characters extends Command {
 
         if (!member) {
             await super.respond(message.channel, 'You have not specified a member.');
-            throw new Error('No Ankama nickname specified.');
+            return;
         }
 
         try {

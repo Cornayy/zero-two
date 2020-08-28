@@ -22,7 +22,7 @@ export default class SetNick extends Command {
 
         if (!nickname) {
             await super.respond(message.channel, 'You have not specified a nickname.');
-            throw new Error(`User ${member.displayName} did not set a nickname.`);
+            return;
         }
 
         try {
@@ -34,7 +34,6 @@ export default class SetNick extends Command {
             }
 
             const user = guild.users.find(({ id }) => id === member.id);
-
             if (user) {
                 user.nickname = nickname;
             } else {
@@ -42,7 +41,6 @@ export default class SetNick extends Command {
             }
 
             await guild.save();
-
             await super.respond(message.channel, 'Nickname set!');
         } catch (err) {
             await super.respond(

@@ -20,7 +20,7 @@ export default class Usage extends Command {
 
         if (!cmd) {
             await super.respond(message.channel, 'Could not find that command.');
-            throw new Error(`Command not found ${cmd}.`);
+            return;
         }
 
         const embed = this.client.builder
