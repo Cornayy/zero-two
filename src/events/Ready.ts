@@ -10,7 +10,7 @@ export default class Ready implements IEvent {
     }
 
     async run(): Promise<void> {
-        Logger.info('Bot is running.');
+        Logger.info(`${this.client.user.username} is running.`);
         this.client.user.setPresence(this.client.settings.presence);
     }
 }
