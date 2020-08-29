@@ -7,7 +7,7 @@ Create a .env file in the root of your project, a typical .env should look like 
 
 ```
 BOT_TOKEN=TOKEN
-MONGO_URI=URI
+DB_USERNAME=DB_USERNAME
 DB_NAME=DB_NAME
 DB_PASSWORD=DB_PASSWORD
 ```
