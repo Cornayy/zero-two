@@ -17,7 +17,7 @@ export default class Characters extends Command {
             name: 'characters',
             description: 'Get all the characters of the entered Ankama nickname',
             category: 'Information',
-            usage: client.settings.prefix.concat('characters @user'),
+            usage: client.settings.prefix.concat('characters @user or nickname'),
             cooldown: 1000,
             requiredPermissions: ['READ_MESSAGES']
         });
@@ -68,6 +68,9 @@ export default class Characters extends Command {
             embed.addField(name, rest, false);
         });
 
-        await super.respond(message.channel, embed);
+        await super.respond(
+            message.channel,
+            characters ? embed : 'No characters were found for this nickname.'
+        );
     }
 }
