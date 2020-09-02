@@ -39,17 +39,20 @@ export default class Characters extends Command {
         return foundUser;
     }
 
-    public async run(message: Message): Promise<void> {
+    public async run(message: Message, args: any[]): Promise<void> {
         const user = await this.handleChecks(message);
-        if (!user) return;
+        const [username] = args;
+        if (!user && !username) return;
 
-        const content = await fetchUrl(this.BASE_URL.concat(user.nickname));
+        const content = await fetchUrl(this.BASE_URL.concat(user ? user.nickname : username));
         const selector = getContent(content);
         const characters = selector('table[class="ak-container ak-table ak-responsivetable"]')
             .text()
             .split('\n')
             .filter(char => char);
-        const embed = this.client.builder.getEmbed().setTitle(`Characters: ${user.nickname}`);
+        const embed = this.client.builder
+            .getEmbed()
+            .setTitle(`Characters: ${user ? user.nickname : username}`);
 
         characters.forEach(character => {
             const name = character.split(' ').shift();
