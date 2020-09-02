@@ -23,8 +23,13 @@ export default class Characters extends Command {
         });
     }
 
-    private async handleChecks(message: Message): Promise<IUser | null | undefined> {
+    private async handleChecks(
+        message: Message,
+        username: string
+    ): Promise<IUser | null | undefined> {
         const member = message.mentions.members.first();
+        if (!member && username) return;
+
         const guild = await Guild.findOne({ id: message.guild.id }).exec();
         const foundUser = guild ? guild.users.find(({ id }) => id === member.id) : null;
         const checks = [member, guild, foundUser];
@@ -40,8 +45,8 @@ export default class Characters extends Command {
     }
 
     public async run(message: Message, args: any[]): Promise<void> {
-        const user = await this.handleChecks(message);
         const [username] = args;
+        const user = await this.handleChecks(message, username);
         if (!user && !username) return;
 
         const content = await fetchUrl(this.BASE_URL.concat(user ? user.nickname : username));
