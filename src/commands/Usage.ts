@@ -8,7 +8,7 @@ export default class Usage extends Command {
             name: 'usage',
             description: 'Shows the usage of a command',
             category: 'Information',
-            usage: client.settings.prefix.concat('usage'),
+            usage: client.settings.prefix.concat('usage command'),
             cooldown: 1000,
             requiredPermissions: ['READ_MESSAGES']
         });
