@@ -24,7 +24,7 @@ export default class Characters extends Command {
                 'Get all the characters of the entered Ankama nickname. [-d, Dofus], [-dt, Dofus Touch], [-w, Wakfu]',
             category: 'Information',
             usage: client.settings.prefix.concat('characters @user or nickname -d, -dt, -w'),
-            cooldown: 5000,
+            cooldown: 1000,
             requiredPermissions: ['READ_MESSAGES']
         });
     }
