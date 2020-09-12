@@ -17,20 +17,22 @@ export default class SetNick extends Command {
     }
 
     private async getGuild(id: string): Promise<IGuild> {
-        const guild = await Guild.findOne({ id }).exec();
-        return guild ? guild : await Guild.create({ id, users: [] });
+        let guild = await Guild.findOne({ id }).exec();
+        if (!guild) guild = await Guild.create({ id, users: [] });
+
+        return guild;
     }
 
     private async setNickname(guild: IGuild, nickname: string, id: string): Promise<void> {
-        const user = guild.users.find(({ id }) => id === id);
+        const user = guild.users.find(user => user.id === id);
 
         if (user) {
             user.nickname = nickname;
         } else {
-            guild.users.push({ id: id, nickname });
+            guild.users.push({ id, nickname });
         }
 
-        await guild.save();
+        await guild.updateOne({ id: guild.id, users: guild.users });
     }
 
     public async run(message: Message, args: any[]): Promise<void> {

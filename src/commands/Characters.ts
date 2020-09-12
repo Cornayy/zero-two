@@ -17,14 +17,19 @@ export default class Characters extends Command {
             name: 'characters',
             description: 'Get all the characters of the entered Ankama nickname',
             category: 'Information',
-            usage: client.settings.prefix.concat('characters @user'),
+            usage: client.settings.prefix.concat('characters @user or nickname'),
             cooldown: 1000,
             requiredPermissions: ['READ_MESSAGES']
         });
     }
 
-    private async handleChecks(message: Message): Promise<IUser | null | undefined> {
+    private async handleChecks(
+        message: Message,
+        username: string
+    ): Promise<IUser | null | undefined> {
         const member = message.mentions.members.first();
+        if (!member && username) return;
+
         const guild = await Guild.findOne({ id: message.guild.id }).exec();
         const foundUser = guild ? guild.users.find(({ id }) => id === member.id) : null;
         const checks = [member, guild, foundUser];
@@ -39,17 +44,20 @@ export default class Characters extends Command {
         return foundUser;
     }
 
-    public async run(message: Message): Promise<void> {
-        const user = await this.handleChecks(message);
-        if (!user) return;
+    public async run(message: Message, args: any[]): Promise<void> {
+        const [username] = args;
+        const user = await this.handleChecks(message, username);
+        if (!user && !username) return;
 
-        const content = await fetchUrl(this.BASE_URL.concat(user.nickname));
+        const content = await fetchUrl(this.BASE_URL.concat(user ? user.nickname : username));
         const selector = getContent(content);
         const characters = selector('table[class="ak-container ak-table ak-responsivetable"]')
             .text()
             .split('\n')
             .filter(char => char);
-        const embed = this.client.builder.getEmbed().setTitle(`Characters: ${user.nickname}`);
+        const embed = this.client.builder
+            .getEmbed()
+            .setTitle(`Characters: ${user ? user.nickname : username}`);
 
         characters.forEach(character => {
             const name = character.split(' ').shift();
@@ -60,6 +68,9 @@ export default class Characters extends Command {
             embed.addField(name, rest, false);
         });
 
-        await super.respond(message.channel, embed);
+        await super.respond(
+            message.channel,
+            characters.length > 0 ? embed : 'No characters were found for this nickname.'
+        );
     }
 }
