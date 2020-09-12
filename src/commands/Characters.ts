@@ -5,6 +5,7 @@ import { fetchUrl, getContent } from '../utils/scraping';
 import { Guild } from '../models/Guild';
 
 export default class Characters extends Command {
+    private GAME = '/dofus';
     private BASE_URL = 'https://account.ankama.com/en/ankama-profile/';
     private MESSAGES = [
         'You have not specified a member.',
@@ -49,7 +50,9 @@ export default class Characters extends Command {
         const user = await this.handleChecks(message, username);
         if (!user && !username) return;
 
-        const content = await fetchUrl(this.BASE_URL.concat(user ? user.nickname : username));
+        const content = await fetchUrl(
+            this.BASE_URL.concat(user ? user.nickname : username).concat(this.GAME)
+        );
         const selector = getContent(content);
         const characters = selector('table[class="ak-container ak-table ak-responsivetable"]')
             .text()
