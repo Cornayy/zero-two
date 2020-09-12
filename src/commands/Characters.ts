@@ -20,7 +20,8 @@ export default class Characters extends Command {
     constructor(client: IBotClient) {
         super(client, {
             name: 'characters',
-            description: 'Get all the characters of the entered Ankama nickname.',
+            description:
+                'Get all the characters of the entered Ankama nickname. [-d, Dofus], [-dt, Dofus Touch], [-w, Wakfu]',
             category: 'Information',
             usage: client.settings.prefix.concat('characters @user or nickname -d, -dt, -w'),
             cooldown: 1000,
