@@ -73,7 +73,9 @@ export default class Characters extends Command {
 
         await super.respond(
             message.channel,
-            characters.length > 0 ? embed : 'No characters were found for this nickname.'
+            characters.length > 0 || !content
+                ? embed
+                : 'No characters were found for this nickname.'
         );
     }
 }
