@@ -53,7 +53,12 @@ export default class Characters extends Command {
         const content = await fetchUrl(
             this.BASE_URL.concat(user ? user.nickname : username).concat(this.GAME)
         );
-        console.log(content);
+
+        if (!content) {
+            await super.respond(message.channel, 'This nickname does not exist.');
+            return;
+        }
+
         const selector = getContent(content);
         const characters = selector('table[class="ak-container ak-table ak-responsivetable"]')
             .text()
@@ -74,7 +79,7 @@ export default class Characters extends Command {
 
         await super.respond(
             message.channel,
-            characters.length > 0 && content ? embed : 'No characters were found for this nickname.'
+            characters.length > 0 ? embed : 'No characters were found for this nickname.'
         );
     }
 }
