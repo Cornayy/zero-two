@@ -5,7 +5,11 @@ import { fetchUrl, getContent } from '../utils/scraping';
 import { Guild } from '../models/Guild';
 
 export default class Characters extends Command {
-    private GAME = '/dofus';
+    private GAMES: { [key: string]: string } = {
+        '-d': '/dofus',
+        '-dt': '/dofustouch',
+        '-w': '/wakfu'
+    };
     private BASE_URL = 'https://account.ankama.com/en/ankama-profile/';
     private MESSAGES = [
         'You have not specified a member.',
@@ -16,9 +20,9 @@ export default class Characters extends Command {
     constructor(client: IBotClient) {
         super(client, {
             name: 'characters',
-            description: 'Get all the characters of the entered Ankama nickname',
+            description: 'Get all the characters of the entered Ankama nickname.',
             category: 'Information',
-            usage: client.settings.prefix.concat('characters @user or nickname'),
+            usage: client.settings.prefix.concat('characters @user or nickname -d, -dt, -w'),
             cooldown: 1000,
             requiredPermissions: ['READ_MESSAGES']
         });
@@ -45,13 +49,18 @@ export default class Characters extends Command {
         return foundUser;
     }
 
+    private getSuffix(arg: string): string {
+        return this.GAMES[arg] || this.GAMES['-d'];
+    }
+
     public async run(message: Message, args: any[]): Promise<void> {
-        const [username] = args;
+        const [username, option] = args;
         const user = await this.handleChecks(message, username);
         if (!user && !username) return;
 
+        const suffix = this.getSuffix(option);
         const content = await fetchUrl(
-            this.BASE_URL.concat(user ? user.nickname : username).concat(this.GAME)
+            this.BASE_URL.concat(user ? user.nickname : username).concat(suffix)
         );
 
         if (!content) {
