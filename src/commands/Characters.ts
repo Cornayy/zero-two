@@ -73,12 +73,12 @@ export default class Characters extends Command {
         const characters = selector('table[class="ak-container ak-table ak-responsivetable"]')
             .text()
             .split('\n')
-            .filter(char => char);
+            .filter((char: string) => char);
         const embed = this.client.builder
             .getEmbed()
             .setTitle(`Characters: ${user ? user.nickname : username}`);
 
-        characters.forEach(character => {
+        characters.forEach((character: string) => {
             const name = character.split(' ').shift();
             const rest = character
                 .split(' ')

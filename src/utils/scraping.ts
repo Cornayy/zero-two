@@ -10,6 +10,6 @@ export const fetchUrl = async (url: string): Promise<any> => {
     }
 };
 
-export const getContent = (content: string): CheerioStatic => {
+export const getContent = (content: string): cheerio.Root => {
     return load(content);
 };

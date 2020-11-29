@@ -19,28 +19,28 @@
   "dependencies": {
     "axios": "^0.20.0",
     "cheerio": "^1.0.0-rc.3",
-    "discord.js": "^11.5.1",
-    "dotenv": "^8.0.0",
-    "mongoose": "^5.10.1",
-    "node-fetch": "^2.6.0"
+    "discord.js": "^11.6.4",
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.10.18",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/cheerio": "^0.22.21",
+    "@types/cheerio": "^0.22.22",
     "@types/dotenv": "^6.1.1",
-    "@types/mongoose": "^5.5.17",
-    "@types/node": "^12.7.3",
-    "@types/node-fetch": "^2.5.0",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
-    "eslint": "^6.1.0",
+    "@types/mongoose": "^5.10.1",
+    "@types/node": "^12.19.7",
+    "@types/node-fetch": "^2.5.7",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-typescript": "^4.0.1",
-    "eslint-config-node": "^4.0.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-import": "^2.14.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^9.1.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "prettier": "^1.18.2",
-    "typescript": "^3.6.2"
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^1.19.1",
+    "typescript": "^3.9.7"
   }
 }

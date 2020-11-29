@@ -21,7 +21,7 @@ export default class Message implements IEvent {
         const cmd = this.client.commands.get(command);
 
         if (!cmd) return;
-        if (!cmd.hasPermission(message.author, message)) return;
+        if (!cmd.hasPermission(message.member, message)) return;
 
         try {
             await cmd.run(message, argus);

@@ -1,4 +1,4 @@
-import { User, Message, Guild } from 'discord.js';
+import { User, Message, Guild, GuildMember } from 'discord.js';
 import { AnyChannel, IBotClient, ICommandOptions, EmbedOrMessage, IUserCooldown } from './types';
 
 export abstract class Command {
@@ -21,10 +21,10 @@ export abstract class Command {
         this.cooldowns = new Set();
     }
 
-    public hasPermission(user: User, message: Message): boolean {
+    public hasPermission(member: GuildMember, message: Message): boolean {
         if (
-            !this.client.userHasPermission(message.member, this.conf.requiredPermissions) ||
-            [...this.cooldowns].filter(cd => cd.user === user && cd.guild === message.guild)
+            !this.client.userHasPermission(member, this.conf.requiredPermissions) ||
+            [...this.cooldowns].filter(cd => cd.user === member.user && cd.guild === message.guild)
                 .length > 0
         ) {
             message.channel.send(
